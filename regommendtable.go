@@ -171,3 +171,12 @@ func (table *RegommendTable) Flush() {
 
 	table.items = make(map[interface{}]*RegommendItem)
 }
+
+// Internal logging method for convenience.
+func (table *RegommendTable) log(v ...interface{}) {
+	if table.logger == nil {
+		return
+	}
+
+	table.logger.Println(v)
+}
