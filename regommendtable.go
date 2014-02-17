@@ -196,6 +196,47 @@ func cosineSim(t1, t2 map[interface{}]float64) float64 {
 	return sum_xy / denominator
 }
 
+type DistancePair struct {
+	Key interface{}
+	Distance float64
+}
+type DistancePairList []DistancePair
+
+func (p DistancePairList) Swap(i, j int) { p[i], p[j] = p[j], p[i] }
+func (p DistancePairList) Len() int { return len(p) }
+func (p DistancePairList) Less(i, j int) bool { return p[i].Distance > p[j].Distance }
+
+func (table *RegommendTable) Neighbors(key interface{}) (DistancePairList, error) {
+	dists := DistancePairList{}
+
+	sitem, err := table.Value(key)
+	if err != nil {
+		return dists, err
+	}
+	smap := sitem.Data()
+
+	table.RLock()
+	defer table.RUnlock()
+	for k, ditem := range table.items {
+		if err != nil {
+			continue
+		}
+		if k == key {
+			continue
+		}
+
+		fmt.Println("Analyzing:", k)
+		distance := DistancePair{
+			Key: k,
+			Distance: cosineSim(smap, ditem.Data()),
+		}
+		dists = append(dists, distance)
+	}
+	sort.Sort(dists)
+
+	return dists, nil
+}
+
 // Internal logging method for convenience.
 func (table *RegommendTable) log(v ...interface{}) {
 	if table.logger == nil {
