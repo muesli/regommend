@@ -206,6 +206,51 @@ func (p DistancePairList) Swap(i, j int) { p[i], p[j] = p[j], p[i] }
 func (p DistancePairList) Len() int { return len(p) }
 func (p DistancePairList) Less(i, j int) bool { return p[i].Distance > p[j].Distance }
 
+func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error) {
+	dists, err := table.Neighbors(key)
+	if err != nil {
+		return dists, err
+	}
+
+	totalDistance := 0.0
+	for _, v := range dists {
+		fmt.Println("Comparing to", v.Key, "-", v.Distance)
+		totalDistance += v.Distance
+	}
+
+	recs := make(map[interface{}]float64)
+	for _, v := range dists {
+		weight := v.Distance / totalDistance
+		if weight == 0 {
+			break
+		}
+
+		ditem, _ := table.Value(v.Key)
+		recMap := ditem.Data()
+		for key, x := range recMap {
+			score, ok := recs[key]
+			if ok {
+				recs[key] = score + x * weight
+			} else {
+				recs[key] = x * weight
+			}
+		}
+	}
+
+	recsList := make(DistancePairList, len(recs))
+	i := 0
+	for key, score := range recs {
+		recsList[i] = DistancePair{
+			Key: key,
+			Distance: score,
+		}
+		i++
+	}
+	sort.Sort(recsList)
+
+	return recsList, nil
+}
+
 func (table *RegommendTable) Neighbors(key interface{}) (DistancePairList, error) {
 	dists := DistancePairList{}
 
