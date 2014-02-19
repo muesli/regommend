@@ -211,6 +211,11 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 	if err != nil {
 		return dists, err
 	}
+	sitem, err := table.Value(key)
+	if err != nil {
+		return dists, err
+	}
+	smap := sitem.Data()
 
 	totalDistance := 0.0
 	for _, v := range dists {
@@ -228,6 +233,12 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 		ditem, _ := table.Value(v.Key)
 		recMap := ditem.Data()
 		for key, x := range recMap {
+			_, ok := smap[key]
+			if ok {
+				// key already knows this item, don't recommend it
+				continue
+			}
+
 			score, ok := recs[key]
 			if ok {
 				recs[key] = score + x * weight
