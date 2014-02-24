@@ -30,3 +30,6 @@ func main() {
 	books := regommend.Table("books")
 }
 ```
+
+## Development
+API docs can be found [here](http://godoc.org/github.com/muesli/regommend).
