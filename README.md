@@ -48,5 +48,9 @@ func main() {
 }
 ```
 
+To run this example, go to example/ and run:
+
+    go run example.go
+
 ## Development
 API docs can be found [here](http://godoc.org/github.com/muesli/regommend).
