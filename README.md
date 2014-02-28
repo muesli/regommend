@@ -45,6 +45,9 @@ func main() {
 	for _, rec := range recs {
 		fmt.Println("Recommending", rec.Key, "with score", rec.Distance)
 	}
+
+	neighbors, _ := books.Neighbors("Chris")
+	...
 }
 ```
 
