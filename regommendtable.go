@@ -261,7 +261,7 @@ func (table *RegommendTable) Neighbors(key interface{}) (DistancePairList, error
 		fmt.Println("Analyzing:", k)
 		distance := DistancePair{
 			Key: k,
-			Distance: cosineSim(smap, ditem.Data()),
+			Distance: pearsonSim(smap, ditem.Data()),
 		}
 		dists = append(dists, distance)
 	}
