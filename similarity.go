@@ -10,7 +10,7 @@ package regommend
 import (
 	_ "errors"
 	_ "log"
-	"fmt"
+	_ "fmt"
 	"math"
 )
 
@@ -22,7 +22,7 @@ func cosineSim(t1, t2 map[interface{}]float64) float64 {
 	for key, x := range t1 {
 		y, ok := t2[key]
 		if ok {
-			fmt.Println("Found shared:", key, x, y)
+//			fmt.Println("Found shared:", key, x, y)
 
 			sum_xy += x * y
 			sum_x2 += math.Pow(x, 2)
@@ -49,7 +49,7 @@ func pearsonSim(t1, t2 map[interface{}]float64) float64 {
 	for key, x := range t1 {
 		y, ok := t2[key]
 		if ok {
-			fmt.Println("Found shared:", key, x, y)
+//			fmt.Println("Found shared:", key, x, y)
 			n++
 
 			sum_xy += x * y
