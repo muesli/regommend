@@ -193,15 +193,18 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 
 	totalDistance := 0.0
 	for _, v := range dists {
-		fmt.Println("Comparing to", v.Key, "-", v.Distance)
+//		fmt.Println("Comparing to", v.Key, "-", v.Distance)
 		totalDistance += v.Distance
 	}
 
 	recs := make(map[interface{}]float64)
 	for _, v := range dists {
 		weight := v.Distance / totalDistance
-		if weight == 0 {
+		if weight <= 0 {
 			break
+		}
+		if weight > 1 {
+			weight = 1
 		}
 
 		ditem, _ := table.Value(v.Key)
