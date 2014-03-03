@@ -10,7 +10,7 @@ package regommend
 import (
 	"errors"
 	"log"
-	"fmt"
+	_ "fmt"
 	"sort"
 	"sync"
 	_ "time"
@@ -193,7 +193,7 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 
 	totalDistance := 0.0
 	for _, v := range dists {
-//		fmt.Println("Comparing to", v.Key, "-", v.Distance)
+		//fmt.Println("Comparing to", v.Key, "-", v.Distance)
 		totalDistance += v.Distance
 	}
 
@@ -201,7 +201,7 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 	for _, v := range dists {
 		weight := v.Distance / totalDistance
 		if weight <= 0 {
-			break
+			continue
 		}
 		if weight > 1 {
 			weight = 1
@@ -216,6 +216,7 @@ func (table *RegommendTable) Recommend(key interface{}) (DistancePairList, error
 				continue
 			}
 
+			//fmt.Println("Adding to recs:", key)
 			score, ok := recs[key]
 			if ok {
 				recs[key] = score + x * weight
@@ -258,11 +259,12 @@ func (table *RegommendTable) Neighbors(key interface{}) (DistancePairList, error
 			continue
 		}
 
-		fmt.Println("Analyzing:", k)
+		//fmt.Println("Analyzing:", k)
 		distance := DistancePair{
 			Key: k,
 			Distance: pearsonSim(smap, ditem.Data()),
 		}
+		//fmt.Println("Distance:", distance.Distance)
 		dists = append(dists, distance)
 	}
 	sort.Sort(dists)
