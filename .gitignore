@@ -23,3 +23,6 @@ _testmain.go
 
 # Backup files
 *~
+
+# Binaries
+example/example
