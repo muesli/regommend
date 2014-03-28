@@ -20,8 +20,8 @@ func cosineSim(t1, t2 map[interface{}]float64) float64 {
 	sum_y2 := 0.0
 
 	for key, x := range t1 {
-		y, ok := t2[key]
-		if ok {
+		y, _ := t2[key]
+		{
 //			fmt.Println("Found shared:", key, x, y)
 
 			sum_xy += x * y
