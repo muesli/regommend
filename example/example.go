@@ -21,6 +21,11 @@ func main() {
 	booksJayRead["Gulliver's Travels"] = 4.5
 	books.Add("Jay", booksJayRead)
 
+	nbs, _ := books.Neighbors("Chris")
+	for _, nb := range nbs {
+		fmt.Println("Recommending", nb.Key, "with score:", nb.Distance)
+	}
+
 	recs, _ := books.Recommend("Chris")
 	for _, rec := range recs {
 		fmt.Println("Recommending", rec.Key, "with score:", rec.Distance)
