@@ -13,8 +13,9 @@ To install regommend, simply run:
 
 To compile it from source:
 
-    git clone git://github.com/muesli/regommend.git
-    cd regommend && go build && go test -v
+    cd $GOPATH/src/github.com/muesli/regommend
+    go get -u -v
+    go build && go test -v
 
 ## Example
 ```go
