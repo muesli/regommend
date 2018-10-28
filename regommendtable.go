@@ -278,5 +278,5 @@ func (table *RegommendTable) log(v ...interface{}) {
 		return
 	}
 
-	table.logger.Println(v)
+	table.logger.Println(v...)
 }
