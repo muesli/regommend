@@ -16,7 +16,7 @@ var (
 	mutex sync.RWMutex
 )
 
-// Returns the existing engine table with given name or creates a new one
+// Table returns the existing engine table with given name or creates a new one
 // if the table does not exist yet.
 func Table(table string) *RegommendTable {
 	mutex.RLock()

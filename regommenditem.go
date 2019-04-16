@@ -23,7 +23,7 @@ type RegommendItem struct {
 	data map[interface{}]float64
 }
 
-// Returns a newly created RegommendItem.
+// CreateRegommendItem returns a newly created RegommendItem.
 // Parameter key is the item's key.
 // Parameter data is the item's value.
 func CreateRegommendItem(key interface{}, data map[interface{}]float64) RegommendItem {
@@ -33,13 +33,13 @@ func CreateRegommendItem(key interface{}, data map[interface{}]float64) Regommen
 	}
 }
 
-// Returns the key of this item.
+// Key returns the key of this item.
 func (item *RegommendItem) Key() interface{} {
 	// immutable
 	return item.key
 }
 
-// Returns the value of this item.
+// Data returns the value of this item.
 func (item *RegommendItem) Data() map[interface{}]float64 {
 	// immutable
 	return item.data
