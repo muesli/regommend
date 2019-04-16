@@ -36,7 +36,7 @@ type RegommendTable struct {
 	aboutToDeleteItem func(item *RegommendItem)
 }
 
-// Returns how many items are currently stored in the engine.
+// Count returns how many items are currently stored in the engine.
 func (table *RegommendTable) Count() int {
 	table.RLock()
 	defer table.RUnlock()
@@ -74,7 +74,7 @@ func (table *RegommendTable) SetLogger(logger *log.Logger) {
 	table.logger = logger
 }
 
-// Adds a key/value pair to the engine.
+// Add adds a key/value pair to the engine.
 // Parameter key is the item's engine-key.
 // Parameter data is the item's value.
 func (table *RegommendTable) Add(key interface{}, data map[interface{}]float64) *RegommendItem {
@@ -135,7 +135,7 @@ func (table *RegommendTable) Exists(key interface{}) bool {
 	return ok
 }
 
-// Get an item from the engine and mark it to be kept alive.
+// Value gets an item from the engine and mark it to be kept alive.
 func (table *RegommendTable) Value(key interface{}) (*RegommendItem, error) {
 	table.RLock()
 	r, ok := table.items[key]
